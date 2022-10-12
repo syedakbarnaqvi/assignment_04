@@ -1,0 +1,14 @@
+---
+title: "Assignment 4: Data Visualization, Git, and Quarto"
+author: "Akbar Naqvi and Roujia Lin"
+format: html
+editor: visual
+---
+
+## Data Used
+
+For this assignment, we are using the **Community Resilience Estimates from the U.S Census Bureau:** (<https://www.census.gov/programs-surveys/community-resilience-estimates.html>)
+
+The CRE tracks how at-risk every single neighborhood in the United States is to the impacts of COVID-19 and other local disasters, by measuring the capacity of individuals and households at absorbing, enduring and recovering from the external stresses of the impacts of a disaster.
+
+## 
