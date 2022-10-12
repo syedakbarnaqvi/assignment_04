@@ -11,4 +11,36 @@ For this assignment, we are using the **Community Resilience Estimates from the 
 
 The CRE tracks how at-risk every single neighborhood in the United States is to the impacts of COVID-19 and other local disasters, by measuring the capacity of individuals and households at absorbing, enduring and recovering from the external stresses of the impacts of a disaster.
 
-## 
+## Figure 1
+
+This scatterplot maps the relationship between the percentage of households that are at high risk for a disaster, defined by the census as having 3 or more risk factors (defined [here](https://www.census.gov/programs-surveys/community-resilience-estimates/technical-documentation/methodology.html)),that make them vulnerable to a disaster and the percentage of that population's state that lives in a rural area, and adds an additional layer by demonstrating the population of the state using the size of the bubbles.
+
+```{r}
+
+library(tidyverse)
+cre_equity_state<-read_csv("https://www2.census.gov/programs-surveys/demo/datasets/community-resilience/2019/CRE_Equity_State_19.csv")
+
+
+ggplot(data = cre_equity_state,
+       mapping = aes(x = Rural_Pop_PE,
+                     y = PRED3_PE,
+                     size = Total_Population_E)) + 
+  geom_point(color = "red", alpha = 0.7)+
+  scale_size(range = c(.1,15))+
+  labs(title = paste("Disaster Risk vs. Rurality"),
+       subtitle = paste("Both highly urban and highly rural populations can be vulnerable to disasters",
+                        "are less resilient to disasters"),
+       caption = paste("Source: U.S Census Bureau Community Resilience Estimates"),
+       size = "Total Population",
+       x = "Percent of Population Living in Rural Areas ",
+       y = "% people with 3+ risk factors
+       \nfor vulnerability to a disaster", color = "Total Population") +
+   geom_text(aes(label = NAME), 
+            show.legend = F,
+            size = 1.75)+
+  theme(legend.position = "none")
+
+
+```
+
+As would be expected, larger states tend to have a smaller share of the population living in rural areas. What is interesting about this figure is that we see absolutely no relationship whatsoever between the percent of people who are "high risk" for a disaster and the percent of people who live in a rural area. Given that rural areas have less access to broadband and experience high levels of poverty, both inputs into the CRE, it is surprising to see that a state's share of people living in rural areas does not have an impact on the share of people experiencing a disaster. This might demonstrate that people in urban areas face other challenges unique to them that also make them vulnerable to disasters.
