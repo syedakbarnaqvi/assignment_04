@@ -93,3 +93,48 @@ color = "Total Population")
 ```
 
 This graph describes the difference between the resilience of black community and the nation as a whole. In this graph, in the most of the states in US, the black community resilience is weaker than the national community resilience, which shows the inequality among the races is a problem which still need to address.
+
+## Figure 3
+
+```{r,Gini Index vs single mother households}
+#| warning: false
+
+#Read the package
+
+library(tidyverse)
+
+library(ggplot2)
+
+#Read the dataset
+
+cre_equity_state <- read_csv("https://www2.census.gov/programs-surveys/demo/datasets/community-resilience/2019/CRE_Equity_State_19.csv")
+
+#Plot Gini Index vs single mother households
+
+ggplot(data = cre_equity_state,
+
+       mapping = aes(x =Female_no_partner_w_child_PE,y = GINI_IND_Inequality_E))+
+
+  geom_line(alpha = 1,fill="Blue")+
+
+  geom_point()+
+
+  scale_size(range = c(.1,10))+
+
+  labs(title = paste("Gini Index vs single mother households"),
+
+       subtitle = paste("the relationship between single mother households and Gini Index of income inequality"),
+
+       caption = paste("Source: U.S Census Bureau"),
+
+       size = "Total Population",
+
+       x = "% in population that female householder has child dependents",
+
+       y = "Gini Index",
+
+       color = "Total Population")
+
+```
+
+variable x: Percentage of households with a female householder, no spouse/partner present, with own children of household under 18 years. variable y: GINI_IND_Inequality_E:Gini Index of Income Inequality In generally, when the percentage of the single mother household increases, the Gini Index of income inequality also increase.
