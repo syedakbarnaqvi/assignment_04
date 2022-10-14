@@ -26,7 +26,8 @@ cre_equity_county<-read_csv("https://www2.census.gov/programs-surveys/demo/datas
 ggplot(data = cre_equity_state,
        mapping = aes(x = Rural_Pop_PE,
                      y = PRED3_PE,
-                     size = Total_Population_E)) + 
+                     size = Total_Population_E,
+                     position_jitter()))+ 
   geom_point(color = "red", alpha = 0.7)+
   scale_size(range = c(.1,15))+
   labs(title = paste("Disaster Risk vs. Rurality"),
@@ -59,9 +60,8 @@ cre_equity_county %>%
   mutate("more_white" = if_else(NH_White_alone_PF ==1|NH_White_alone_PF == 0 , "Less Non-White", "More Non_White")) %>%
   filter(PRED3_PF == 1) %>%
   ggplot() +
-  geom_bar(mapping = aes(x = more_white), 
-           alpha = 0.2,
-           fill = "blue") +
+  geom_bar(mapping = aes(x = more_white,fill = "blue"), 
+           alpha = 0.2) +
   theme_classic()+
   labs(title = paste("Minority Community Resilience"),
        subtitle = paste("Communities with a higher share of minorities are less resilient than those with a lower share"),
@@ -87,7 +87,8 @@ ggplot(data = cre_equity_state,
        mapping = aes(x =Female_no_partner_w_child_PE,y = GINI_IND_Inequality_E))+
 
   geom_smooth(method = "lm",
-              color = "red")+
+              color = "red",
+              linetype = "solid")+
 
   geom_point()+
 
@@ -117,9 +118,8 @@ cre_equity_county%>%
   filter(PRED3_PF == 1) %>%
     mutate("No_Health_Ins" = if_else(No_Health_Ins_PF== 1, "Less Health Insurance", "More Health Insurance")) %>%
   ggplot()+
-  geom_bar(mapping = aes(x = No_Health_Ins), 
-           alpha = 1,
-           fill="pink")+ 
+  geom_bar(mapping = aes(x = No_Health_Ins,fill="pink"), 
+           alpha = 1 )+ 
   labs(title = paste("Community Resilience and Health Insurance"),
        subtitle = paste("Counties with more high risk households than average have more people without health insurance than average"), 
        caption = paste("Source: U.S Census Bureau"), 
