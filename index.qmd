@@ -107,6 +107,8 @@ scale_x_continuous(breaks = seq(0,8, by = 1),
 
 From this graph we key in on a major risk factor in the CRE: the presence of a single caregiver, in this case a single mother. We look at states again to analyze the data from a higher level. If the risk factor is valid, we would expect that regions with more single mother households experience higher levels of inequality, which are usually associated with high levels of instability, rendering individuals in that region vulnerable to disasters. In general, we see that states with a higher percentage of single mother households experience higher levels of inequality
 
+## Figure 4
+
 ```{r}
 
 #Plot the density of the difference between the population without health insurance and national estimate 
