@@ -13,8 +13,6 @@ The CRE tracks how at-risk every single neighborhood in the United States is to 
 
 ## Figure 1
 
-This scatterplot maps the relationship between the percentage of households that are at high risk for a disaster, defined by the census as having 3 or more risk factors (defined [here](https://www.census.gov/programs-surveys/community-resilience-estimates/technical-documentation/methodology.html)),that make them vulnerable to a disaster and the percentage of that population's state that lives in a rural area, and adds an additional layer by demonstrating the population of the state using the size of the bubbles.
-
 ```{r}
 
 library(tidyverse)
@@ -42,6 +40,8 @@ ggplot(data = cre_equity_state,
 
 
 ```
+
+This scatter plot maps the relationship between the percentage of households that are at high risk for a disaster, defined by the census as having 3 or more risk factors (defined [here](https://www.census.gov/programs-surveys/community-resilience-estimates/technical-documentation/methodology.html)),that make them vulnerable to a disaster and the percentage of that population's state that lives in a rural area, and adds an additional layer by demonstrating the population of the state using the size of the bubbles.
 
 As would be expected, larger states tend to have a smaller share of the population living in rural areas. What is interesting about this figure is that we see absolutely no relationship whatsoever between the percent of people who are "high risk" for a disaster and the percent of people who live in a rural area. Given that rural areas have less access to broadband and experience high levels of poverty, both inputs into the CRE, it is surprising to see that a state's share of people living in rural areas does not have an impact on the share of people experiencing a disaster. This might demonstrate that people in urban areas face other challenges unique to them that also make them vulnerable to disasters.
 
@@ -71,7 +71,7 @@ cre_equity_county %>%
 
 ```
 
-This graph describes the difference between the resilience of communities with a high concentration of minorities. We see that a larger number of counties that are more non-white than average have a higher percentage of individuals that are described as "high risk" by the community resilience index. This confirms the hypothesis that areas with more people of color have more people that are considerably vulnerable to the effects of a disaster, something reflected in the disproportionate impact of the Covid-19 pandemic on minorities.
+This figure attempts to examine the difference in resilience of communities with a high concentration of minorities. This time, to get a more robust look at the data, we pull the CRE data at the county level. We see that a larger number of counties that are more non-white than average have a higher percentage of households that are described as "high risk" by the community resilience index than the national average. This confirms the hypothesis that areas with more people of color have more people that are considerably vulnerable to the effects of a disaster, something reflected in the disproportionate impact of the Covid-19 pandemic on minorities.
 
 ## Figure 3
 
@@ -105,30 +105,26 @@ scale_x_continuous(breaks = seq(0,8, by = 1),
 
 ```
 
-From this graph we key in on a major risk factor in the CRE: the presence of a single caregiver, in this case a single mother. If the risk factor is valid, we would expect that regions with more single mother households experience higher levels of inequality, which are usually associated with high levels of instability, rendering individuals in that region vulnerable to disasters. In general, we see that when the percentage of the single mother households is associated with higher income inequality.
+From this graph we key in on a major risk factor in the CRE: the presence of a single caregiver, in this case a single mother. We look at states again to analyze the data from a higher level. If the risk factor is valid, we would expect that regions with more single mother households experience higher levels of inequality, which are usually associated with high levels of instability, rendering individuals in that region vulnerable to disasters. In general, we see that states with a higher percentage of single mother households experience higher levels of inequality
 
-## Figure 4
-
-```{r, Gini Index vs difference between the population without health insurance and national estimate}
-#\| warning: false #Read the package library(tidyverse) library(ggplot2)
-
-#Read the dataset cre_equity_state \<- read_csv("https://www2.census.gov/programs-surveys/demo/datasets/community-resilience/2019/CRE_Equity_State_19.csv")
+```{r}
 
 #Plot the density of the difference between the population without health insurance and national estimate 
-ggplot(data = cre_equity_state, mapping = aes(x =No_Health_Ins_PF))+
-  geom_density(alpha = 1,fill="White",color = "grey")+ 
-  scale_size(range = c(.1,10))+ 
-  labs(title = paste("population without health insurance vs national estimate"),
-       subtitle = paste("the differnce between the population without health insurance and national estimate"), 
+cre_equity_county%>%
+  filter(PRED3_PF == 1) %>%
+    mutate("No_Health_Ins" = if_else(No_Health_Ins_PF== 1, "Less Health Insurance", "More Health Insurance")) %>%
+  ggplot()+
+  geom_bar(mapping = aes(x = No_Health_Ins), 
+           alpha = 1,
+           fill="pink")+ 
+  labs(title = paste("Community Resilience and Health Insurance"),
+       subtitle = paste("Counties with more high risk households than average have more people without health insurance than average"), 
        caption = paste("Source: U.S Census Bureau"), 
        size = "Total Population", 
-       x = "the difference between the population who do not have health insurance and natioanl estimate", 
-       y = "density", color = "Total Population") 
+       x = "Health Insurance Status vs National", 
+       y = "Number of Counties")+
+  coord_flip()
 
 ```
 
-variable x: Flag denoting if the estimated percentage of civilian noninstitutionalized population with no health insurance coverage is significantly different than the national estimate.
-
-In nearly 60% of all states, among the people who do not have health insurance, the estimate is lower than the national estimate and it is statistically different.In nearly 38% of all states,among the people who do not have health insurance, the estimate is higher than the national estimate and it is statistically different.
-
-[extract](%22https://educationdata.urban.org/data-explorer/explorer)
+Another input into the CRE is whether households are covered by health insurance. To verify the inclusion of this variable, we zoom in on counties with more high risk households than average and see how many of those counties also have a higher share of households without health insurance than the national average. We see a stark difference between the two, there are nearly twice as many counties with more high risk households than average in which there are also fewer households with insurance than average, compared to those that have the same or more health insurance than the national average. This was heavily reflected, again, during the Covid-19 pandemic, when health insurance gaps were correlated with both [positively correlated with excess mortality](https://www.whitehouse.gov/cea/written-materials/2022/07/12/excess-mortality-during-the-pandemic-the-role-of-health-insurance/) and [negatively correlated with vaccination rates](https://www.kff.org/coronavirus-covid-19/poll-finding/kff-covid-19-vaccine-monitor-profile-of-the-unvaccinated/)
