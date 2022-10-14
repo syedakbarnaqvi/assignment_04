@@ -47,7 +47,7 @@ As would be expected, larger states tend to have a smaller share of the populati
 
 ## Figure 2
 
-```{r,Black community resilience vs national community resilience}
+```{r,Minority Community Resilience}
 
 
 cre_equity_county<-read_csv("https://www2.census.gov/programs-surveys/demo/datasets/community-resilience/2019/CRE_Equity_County_19.csv")
@@ -62,7 +62,7 @@ cre_equity_county %>%
            alpha = 0.2,
            fill = "blue") +
   theme_classic()+
-  labs(title = paste("Minority community Resilience"),
+  labs(title = paste("Minority Community Resilience"),
        subtitle = paste("Communities with a higher share of minorities are less resilient than those with a lower share"),
        caption = paste("Source: U.S Census Bureau"),
        x = "Non-White Share Compared to the National Average",
@@ -73,14 +73,11 @@ cre_equity_county %>%
 
 This graph describes the difference between the resilience of communities with a high concentration of minorities. We see that a larger number of counties that are more non-white than average have a higher percentage of individuals that are described as "high risk" by the community resilience index. This confirms the hypothesis that areas with more people of color have more people that are considerably vulnerable to the effects of a disaster, something reflected in the disproportionate impact of the Covid-19 pandemic on minorities.
 
-## Figure 4
+## Figure 3
 
-```{r,Gini Index vs single mother households}
-#| warning: false
+```{r}
 
-#Read the dataset
 
-cre_equity_state <- read_csv("https://www2.census.gov/programs-surveys/demo/datasets/community-resilience/2019/CRE_Equity_State_19.csv")
 
 #Plot Gini Index vs single mother households
 
@@ -88,31 +85,29 @@ ggplot(data = cre_equity_state,
 
        mapping = aes(x =Female_no_partner_w_child_PE,y = GINI_IND_Inequality_E))+
 
-  geom_line(alpha = 1,fill="Blue")+
+  geom_smooth(method = "lm",
+              color = "red")+
 
   geom_point()+
 
-  scale_size(range = c(.1,10))+
+scale_x_continuous(breaks = seq(0,8, by = 1), 
+                     limits = c(3,8))+
 
-  labs(title = paste("Gini Index vs single mother households"),
+  labs(title = paste("Inequality in Single-Mother Households"),
 
-       subtitle = paste("the relationship between single mother households and Gini Index of income inequality"),
+       subtitle = paste("States with more single mothers experience more inequality"),
 
        caption = paste("Source: U.S Census Bureau"),
 
-       size = "Total Population",
+       x = "% of Households With a Single Mother",
 
-       x = "% in population that female householder has child dependents",
-
-       y = "Gini Index",
-
-       color = "Total Population")
+       y = "Gini Index of Inequality")
 
 ```
 
-variable x: Percentage of households with a female householder, no spouse/partner present, with own children of household under 18 years. variable y: GINI_IND_Inequality_E:Gini Index of Income Inequality In generally, when the percentage of the single mother household increases, the Gini Index of income inequality also increase.
+From this graph we key in on a major risk factor in the CRE: the presence of a single caregiver, in this case a single mother. If the risk factor is valid, we would expect that regions with more single mother households experience higher levels of inequality, which are usually associated with high levels of instability, rendering individuals in that region vulnerable to disasters. In general, we see that when the percentage of the single mother households is associated with higher income inequality.
 
-## Figure 3
+## Figure 4
 
 ```{r, Gini Index vs difference between the population without health insurance and national estimate}
 #\| warning: false #Read the package library(tidyverse) library(ggplot2)
