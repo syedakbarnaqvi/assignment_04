@@ -11,9 +11,7 @@ For this assignment, we are using the **Community Resilience Estimates from the 
 
 The CRE tracks how at-risk every single neighborhood in the United States is to the impacts of COVID-19 and other local disasters, by measuring the capacity of individuals and households at absorbing, enduring and recovering from the external stresses of the impacts of a disaster.
 
-## Loading the Data
-
-```{r, results = 'hide'}
+```{r, results = 'hide', echo = FALSE, message = FALSE, warning = FALSE, fig.show ='hide'}
 
 library(tidyverse)
 cre_equity_state<-read_csv("https://www2.census.gov/programs-surveys/demo/datasets/community-resilience/2019/CRE_Equity_State_19.csv")
