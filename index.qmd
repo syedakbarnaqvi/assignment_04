@@ -11,13 +11,19 @@ For this assignment, we are using the **Community Resilience Estimates from the 
 
 The CRE tracks how at-risk every single neighborhood in the United States is to the impacts of COVID-19 and other local disasters, by measuring the capacity of individuals and households at absorbing, enduring and recovering from the external stresses of the impacts of a disaster.
 
-## Figure 1
+## Loading the Data
 
-```{r}
+```{r, results = 'hide'}
 
 library(tidyverse)
 cre_equity_state<-read_csv("https://www2.census.gov/programs-surveys/demo/datasets/community-resilience/2019/CRE_Equity_State_19.csv")
+cre_equity_county<-read_csv("https://www2.census.gov/programs-surveys/demo/datasets/community-resilience/2019/CRE_Equity_County_19.csv")
 
+```
+
+## Figure 1
+
+```{r}
 
 ggplot(data = cre_equity_state,
        mapping = aes(x = Rural_Pop_PE,
@@ -47,10 +53,7 @@ As would be expected, larger states tend to have a smaller share of the populati
 
 ## Figure 2
 
-```{r,Minority Community Resilience}
-
-
-cre_equity_county<-read_csv("https://www2.census.gov/programs-surveys/demo/datasets/community-resilience/2019/CRE_Equity_County_19.csv")
+```{r}
 
 #Plot High Risk Minority Counties
 
