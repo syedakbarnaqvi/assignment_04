@@ -49,61 +49,34 @@ As would be expected, larger states tend to have a smaller share of the populati
 
 ```{r,Black community resilience vs national community resilience}
 
-#\| warning: false
 
-#Read the package
+cre_equity_county<-read_csv("https://www2.census.gov/programs-surveys/demo/datasets/community-resilience/2019/CRE_Equity_County_19.csv")
 
-library(tidyverse)
+#Plot High Risk Majority-Black Counties
 
-library(ggplot2)
-
-#Read the dataset
-
-cre_equity_state <- read_csv("https://www2.census.gov/programs-surveys/demo/datasets/community-resilience/2019/CRE_Equity_State_19.csv")
-
-#Plot Black community resilience vs national community resilience
-
-ggplot(data = cre_equity_state,
-
-mapping = aes(x = NH_Black_alone_PF,
-
-size = Total_Population_E)) +
-
-geom_bar(alpha = 0.5,fill="grey")+
-
-theme_classic()+
-
-scale_size(range = c(.1,10))+
-
-labs(title = paste("Black community Resilience"),
-
-subtitle = paste("the difference between the black community resilience and the national community resilience."),
-
-caption = paste("Source: U.S Census Bureau"),
-
-size = "Total Population",
-
-x = "difference in resilience",
-
-y = "quantity of states",
-
-color = "Total Population")
+cre_equity_county %>%
+  mutate("more_white" = if_else(NH_White_alone_PF ==1|NH_White_alone_PF == 0 , "Less Non-White", "More Non_White")) %>%
+  filter(PRED3_PF == 1) %>%
+  ggplot() +
+  geom_bar(mapping = aes(x = more_white), 
+           alpha = 0.2,
+           fill = "blue") +
+  theme_classic()+
+  labs(title = paste("Minority community Resilience"),
+       subtitle = paste("Communities with a higher share of minorities are less resilient than those with a lower share"),
+       caption = paste("Source: U.S Census Bureau"),
+       x = "Non-White Share Compared to the National Average",
+       y = "Number of Counties")
 
 
 ```
 
-This graph describes the difference between the resilience of black community and the nation as a whole. In this graph, in the most of the states in US, the black community resilience is weaker than the national community resilience, which shows the inequality among the races is a problem which still need to address.
+This graph describes the difference between the resilience of communities with a high concentration of minorities. We see that a larger number of counties that are more non-white than average have a higher percentage of individuals that are described as "high risk" by the community resilience index. This confirms the hypothesis that areas with more people of color have more people that are considerably vulnerable to the effects of a disaster, something reflected in the disproportionate impact of the Covid-19 pandemic on minorities.
 
 ## Figure 4
 
 ```{r,Gini Index vs single mother households}
 #| warning: false
-
-#Read the package
-
-library(tidyverse)
-
-library(ggplot2)
 
 #Read the dataset
 
