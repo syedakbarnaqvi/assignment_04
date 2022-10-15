@@ -31,8 +31,7 @@ ggplot(data = cre_equity_state,
   geom_point(color = "red", alpha = 0.7)+
   scale_size(range = c(.1,15))+
   labs(title = paste("Disaster Risk vs. Rurality"),
-       subtitle = paste("Both highly urban and highly rural populations can be vulnerable to disasters",
-                        "are less resilient to disasters"),
+       subtitle = paste("Both highly urban and highly rural populations can be vulnerable to disasters"),
        caption = paste("Source: U.S Census Bureau Community Resilience Estimates"),
        size = "Total Population",
        x = "Percent of Population Living in Rural Areas ",
@@ -130,4 +129,4 @@ cre_equity_county%>%
 
 ```
 
-Another input into the CRE is whether households are covered by health insurance. To verify the inclusion of this variable, we zoom in on counties with more high risk households than average and see how many of those counties also have a higher share of households without health insurance than the national average. We see a stark difference between the two, there are nearly twice as many counties with more high risk households than average in which there are also fewer households with insurance than average, compared to those that have the same or more health insurance than the national average. This was heavily reflected, again, during the Covid-19 pandemic, when health insurance gaps were correlated with both [positively correlated with excess mortality](https://www.whitehouse.gov/cea/written-materials/2022/07/12/excess-mortality-during-the-pandemic-the-role-of-health-insurance/) and [negatively correlated with vaccination rates](https://www.kff.org/coronavirus-covid-19/poll-finding/kff-covid-19-vaccine-monitor-profile-of-the-unvaccinated/)
+Another input into the CRE is whether households are covered by health insurance. To verify the inclusion of this variable, we zoom in on counties with more high risk households than average and see how many of those counties also have a higher share of households without health insurance than the national average. We see a stark difference between the two, there are nearly twice as many counties with more high risk households than average in which there are also fewer households with insurance than average, compared to those that have the same or more health insurance than the national average. This was heavily reflected, again, during the Covid-19 pandemic, when health insurance gaps were correlated with both [positively correlated with excess mortality](https://www.whitehouse.gov/cea/written-materials/2022/07/12/excess-mortality-during-the-pandemic-the-role-of-health-insurance/) and [negatively correlated with vaccination rates](https://www.kff.org/coronavirus-covid-19/poll-finding/kff-covid-19-vaccine-monitor-profile-of-the-unvaccinated/).
